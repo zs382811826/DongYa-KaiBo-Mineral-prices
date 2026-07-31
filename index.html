@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>矿产行情看板</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif; background: #f0f2f5; color: #333; }
+.header { background: linear-gradient(135deg, #1a3c5e, #2a5f8f); color: #fff; padding: 24px 32px; }
+.header h1 { font-size: 22px; margin-bottom: 4px; }
+.header .sub { font-size: 13px; opacity: 0.8; }
+.container { max-width: 1200px; margin: 0 auto; padding: 20px 24px; }
+.cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+.card { background: #fff; border-radius: 10px; padding: 18px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.card .label { font-size: 12px; color: #888; margin-bottom: 6px; }
+.card .value { font-size: 26px; font-weight: 700; }
+.card .value.up { color: #e74c3c; }
+.card .value.down { color: #27ae60; }
+.section-title { font-size: 16px; font-weight: 600; margin: 24px 0 12px; color: #1a3c5e; }
+table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+th { background: #f5f7fa; padding: 10px 14px; text-align: left; font-size: 12px; color: #666; font-weight: 500; }
+td { padding: 10px 14px; font-size: 13px; border-top: 1px solid #f0f0f0; }
+.price { font-weight: 600; font-variant-numeric: tabular-nums; }
+.up { color: #e74c3c; font-weight: 600; }
+.down { color: #27ae60; font-weight: 600; }
+.flat { color: #999; }
+.cat-header td { background: #e8ecf1; font-weight: 700; font-size: 13px; color: #1a3c5e; padding: 8px 14px; }
+.product-name { padding-left: 24px; }
+.chart-area { background: #fff; border-radius: 10px; padding: 20px; margin-top: 24px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.chart-controls { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.chart-controls select { padding: 6px 12px; border: 1px solid #d9d9d9; border-radius: 6px; font-size: 13px; }
+.chart-wrapper { position: relative; height: 400px; }
+.footer { text-align: center; padding: 20px; font-size: 11px; color: #aaa; }
+</style>
+</head>
+<body>
+<div class="header">
+    <h1>&#x1f4ca; 东亚&amp;凯博矿产 行情看板</h1>
+    <div class="sub">数据范围：2026-05-01 ~ 2026-07-30 &#xff5c; 共 14 个品种 &#xff5c; 生成时间：2026-07-31 16:31</div>
+</div>
+<div class="container">
+    <div class="cards">
+        <div class="card"><div class="label">品种数量</div><div class="value" style="color:#1a3c5e">14</div></div>
+        <div class="card"><div class="label">周度平均涨跌</div><div class="value down">-0.25%</div></div>
+        <div class="card"><div class="label">月度平均涨跌</div><div class="value down">-4.44%</div></div>
+        <div class="card"><div class="label">年度平均涨跌</div><div class="value down">-4.58%</div></div>
+    </div>
+
+    <div class="section-title">&#x1f4cb; 涨跌幅明细</div>
+    <table>
+        <thead><tr><th>品种</th><th>最新报价（万元）</th><th>周度涨跌</th><th>月度涨跌</th><th>年度涨跌</th></tr></thead>
+        <tbody><tr class="cat-header"><td colspan="5">稀土行情</td></tr><tr>
+            <td class="product-name">氧化钕</td>
+            <td class="price">79.75万</td>
+            <td class="down">-0.62%</td>
+            <td class="down">-5.33%</td>
+            <td class="down">-5.62%</td>
+        </tr><tr>
+            <td class="product-name">氧化镨钕</td>
+            <td class="price">74.35万</td>
+            <td class="down">-3.00%</td>
+            <td class="down">-3.21%</td>
+            <td class="down">-4.68%</td>
+        </tr><tr>
+            <td class="product-name">氧化铽</td>
+            <td class="price">675.00万</td>
+            <td class="down">-0.74%</td>
+            <td class="up">+6.86%</td>
+            <td class="up">+6.47%</td>
+        </tr><tr>
+            <td class="product-name">氧化镝</td>
+            <td class="price">139.50万</td>
+            <td class="down">-0.71%</td>
+            <td class="up">+1.30%</td>
+            <td class="up">+0.94%</td>
+        </tr><tr>
+            <td class="product-name">氧化钇</td>
+            <td class="price">6.00万</td>
+            <td class="flat">0.00%</td>
+            <td class="flat">0.00%</td>
+            <td class="flat">0.00%</td>
+        </tr><tr>
+            <td class="product-name">独居石(REO=54,Pr+Nd=22.5,Tb=0.11,Dy=0.58)</td>
+            <td class="price">4.45万</td>
+            <td class="down">-1.11%</td>
+            <td class="down">-0.56%</td>
+            <td class="down">-1.11%</td>
+        </tr><tr class="cat-header"><td colspan="5">锆业行情</td></tr><tr>
+            <td class="product-name">锆精矿(国内ZrO2>65%,TiO2<0.15%,Fe2O3<0.1%)</td>
+            <td class="price">1.22万</td>
+            <td class="flat">0.00%</td>
+            <td class="up">+1.25%</td>
+            <td class="up">+1.25%</td>
+        </tr><tr>
+            <td class="product-name">锆精矿(越南ZrO2>65%,TiO2<0.15%,Fe2O3<0.1%)</td>
+            <td class="price">1.22万</td>
+            <td class="flat">0.00%</td>
+            <td class="up">+1.25%</td>
+            <td class="up">+1.25%</td>
+        </tr><tr>
+            <td class="product-name">广东高级硅酸锆((Zr+Hf)O2≥64.5%,D50=1.0μm)</td>
+            <td class="price">1.38万</td>
+            <td class="flat">0.00%</td>
+            <td class="up">+5.77%</td>
+            <td class="up">+5.77%</td>
+        </tr><tr class="cat-header"><td colspan="5">钛业行情</td></tr><tr>
+            <td class="product-name">钛精矿(TiO2>49-50%,Fe2O3≤8%)</td>
+            <td class="price">0.1575万</td>
+            <td class="flat">0.00%</td>
+            <td class="up">+5.00%</td>
+            <td class="up">+5.00%</td>
+        </tr><tr>
+            <td class="product-name">金红石型钛白粉（氯化法）</td>
+            <td class="price">1.68万</td>
+            <td class="flat">0.00%</td>
+            <td class="down">-2.62%</td>
+            <td class="down">-2.62%</td>
+        </tr><tr class="cat-header"><td colspan="5">小金属行情</td></tr><tr>
+            <td class="product-name">锡锭</td>
+            <td class="price">41.95万</td>
+            <td class="up">+2.01%</td>
+            <td class="up">+7.36%</td>
+            <td class="up">+8.42%</td>
+        </tr><tr>
+            <td class="product-name">氧化钽(Ta2O5≥99% 工业级)</td>
+            <td class="price">185.00万</td>
+            <td class="flat">0.00%</td>
+            <td class="flat">0.00%</td>
+            <td class="flat">0.00%</td>
+        </tr><tr>
+            <td class="product-name">氧化铌(Nb2O5≥99.5% 冶金级)</td>
+            <td class="price">38.50万</td>
+            <td class="up">+0.65%</td>
+            <td class="down">-79.26%</td>
+            <td class="down">-79.19%</td>
+        </tr></tbody>
+    </table>
+
+    <div class="chart-area">
+        <div class="chart-controls">
+            <label for="productSelect">&#x1f4c8; 选择品种查看趋势：</label>
+            <select id="productSelect"><optgroup label="稀土行情"><option value="氧化钕">氧化钕</option><option value="氧化镨钕">氧化镨钕</option><option value="氧化铽">氧化铽</option><option value="氧化镝">氧化镝</option><option value="氧化钇">氧化钇</option><option value="独居石">独居石(REO=54,Pr+Nd=22.5,Tb=0.11,Dy=0.58)</option></optgroup><optgroup label="锆业行情"><option value="锆精矿(国内)">锆精矿(国内ZrO2>65%,TiO2<0.15%,Fe2O3<0.1%)</option><option value="锆精矿(越南)">锆精矿(越南ZrO2>65%,TiO2<0.15%,Fe2O3<0.1%)</option><option value="高级硅酸锆">广东高级硅酸锆((Zr+Hf)O2≥64.5%,D50=1.0μm)</option></optgroup><optgroup label="钛业行情"><option value="钛精矿">钛精矿(TiO2>49-50%,Fe2O3≤8%)</option><option value="金红石">金红石型钛白粉（氯化法）</option></optgroup><optgroup label="小金属行情"><option value="锡锭">锡锭</option><option value="氧化钽">氧化钽(Ta2O5≥99% 工业级)</option><option value="氧化铌">氧化铌(Nb2O5≥99.5% 冶金级)</option></optgroup></select>
+        </div>
+        <div class="chart-wrapper"><canvas id="trendChart"></canvas></div>
+    </div>
+
+    <div class="footer">矿产行情看板 &#xb7; 数据来源：瑞道金属网，上海有色网，生意社</div>
+</div>
+<script>
+var trendData = {"氧化钕": [{"date": "2026-05-01", "price": 845000}, {"date": "2026-07-24", "price": 802500}, {"date": "2026-07-30", "price": 797500}], "氧化镨钕": [{"date": "2026-05-01", "price": 780000}, {"date": "2026-07-24", "price": 766500}, {"date": "2026-07-30", "price": 743500}], "氧化铽": [{"date": "2026-05-01", "price": 6340000}, {"date": "2026-07-24", "price": 6800000}, {"date": "2026-07-30", "price": 6750000}], "氧化镝": [{"date": "2026-05-01", "price": 1382000}, {"date": "2026-07-24", "price": 1405000}, {"date": "2026-07-30", "price": 1395000}], "氧化钇": [{"date": "2026-05-01", "price": 60000}, {"date": "2026-07-24", "price": 60000}, {"date": "2026-07-30", "price": 60000}], "独居石": [{"date": "2026-05-01", "price": 45000}, {"date": "2026-07-24", "price": 45000}, {"date": "2026-07-30", "price": 44500}], "锆精矿(国内)": [{"date": "2026-05-01", "price": 12000}, {"date": "2026-07-24", "price": 12150}, {"date": "2026-07-30", "price": 12150}], "锆精矿(越南)": [{"date": "2026-05-01", "price": 12000}, {"date": "2026-07-24", "price": 12150}, {"date": "2026-07-30", "price": 12150}], "高级硅酸锆": [{"date": "2026-05-01", "price": 13000}, {"date": "2026-07-24", "price": 13750}, {"date": "2026-07-30", "price": 13750}], "钛精矿": [{"date": "2026-05-01", "price": 1500}, {"date": "2026-07-24", "price": 1575}, {"date": "2026-07-30", "price": 1575}], "金红石": [{"date": "2026-05-01", "price": 17200}, {"date": "2026-07-24", "price": 16750}, {"date": "2026-07-30", "price": 16750}], "锡锭": [{"date": "2026-05-01", "price": 386910}, {"date": "2026-07-24", "price": 411250}, {"date": "2026-07-30", "price": 419500}], "氧化钽": [{"date": "2026-05-01", "price": 1850000}, {"date": "2026-07-24", "price": 1850000}, {"date": "2026-07-30", "price": 1850000}], "氧化铌": [{"date": "2026-05-01", "price": 1850000}, {"date": "2026-07-24", "price": 382500}, {"date": "2026-07-30", "price": 385000}]};
+var chart = null;
+
+function fmtWan(v) {
+    var w = v / 10000;
+    if (w >= 10000) return (w/10000).toFixed(2) + '亿';
+    if (w >= 1) return w.toFixed(2) + '万';
+    return w.toFixed(4) + '万';
+}
+
+function drawChart(name) {
+    if (chart) chart.destroy();
+    var points = trendData[name];
+    var labels = points.map(function(p) { return p.date; });
+    var prices = points.map(function(p) { return p.price; });
+    var ctx = document.getElementById('trendChart').getContext('2d');
+    chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: name + ' (万元)',
+                data: prices,
+                borderColor: '#e74c3c',
+                backgroundColor: 'rgba(231,76,60,0.08)',
+                fill: true,
+                tension: 0.3,
+                pointRadius: 5,
+                pointHoverRadius: 7,
+                pointBackgroundColor: '#e74c3c'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(ctx) { return name + ': ' + fmtWan(ctx.parsed.y); }
+                    }
+                }
+            },
+            scales: {
+                x: { grid: { display: false } },
+                y: {
+                    ticks: { callback: function(v) { return fmtWan(v); } },
+                    grid: { color: '#f0f0f0' }
+                }
+            }
+        }
+    });
+}
+
+document.getElementById('productSelect').addEventListener('change', function(e) { drawChart(e.target.value); });
+drawChart('氧化钕');
+</script>
+</body>
+</html>
