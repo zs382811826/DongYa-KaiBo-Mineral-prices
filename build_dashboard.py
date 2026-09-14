@@ -181,11 +181,12 @@ def build_html(products, latest_prices, weekly, monthly, yearly, trend_data, row
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 * {{ margin:0; padding:0; box-sizing:border-box; }}
+html, body {{ width:100%; min-width:0; overflow-x:hidden; }}
 body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif; background: #f0f2f5; color: #333; }}
-.header {{ background: linear-gradient(135deg, #1a3c5e, #2a5f8f); color: #fff; padding: 24px 32px; }}
+.header {{ width:100%; max-width:100%; overflow:hidden; background: linear-gradient(135deg, #1a3c5e, #2a5f8f); color: #fff; padding: 24px 32px; }}
 .header h1 {{ font-size: 22px; margin-bottom: 4px; }}
-.header .sub {{ font-size: 13px; opacity: 0.8; }}
-.container {{ max-width: 1200px; margin: 0 auto; padding: 20px 24px; }}
+.header .sub {{ font-size: 13px; opacity: 0.8; white-space: normal; overflow-wrap:anywhere; }}
+.container {{ width:100%; max-width: 1200px; min-width:0; margin: 0 auto; padding: 20px 24px; }}
 .cards {{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }}
 .card {{ background: #fff; border-radius: 10px; padding: 18px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }}
 .card .label {{ font-size: 12px; color: #888; margin-bottom: 6px; }}
@@ -193,7 +194,8 @@ body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft Y
 .card .value.up {{ color: #e74c3c; }}
 .card .value.down {{ color: #27ae60; }}
 .section-title {{ font-size: 16px; font-weight: 600; margin: 24px 0 12px; color: #1a3c5e; }}
-table {{ width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }}
+.table-wrap {{ width:100%; max-width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; border-radius:10px; }}
+table {{ width: 100%; min-width: 680px; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }}
 th {{ background: #f5f7fa; padding: 10px 14px; text-align: left; font-size: 12px; color: #666; font-weight: 500; }}
 td {{ padding: 10px 14px; font-size: 13px; border-top: 1px solid #f0f0f0; }}
 .price {{ font-weight: 600; font-variant-numeric: tabular-nums; }}
@@ -207,6 +209,21 @@ td {{ padding: 10px 14px; font-size: 13px; border-top: 1px solid #f0f0f0; }}
 .chart-controls select {{ padding: 6px 12px; border: 1px solid #d9d9d9; border-radius: 6px; font-size: 13px; }}
 .chart-wrapper {{ position: relative; height: 400px; }}
 .footer {{ text-align: center; padding: 20px; font-size: 11px; color: #aaa; }}
+@media (max-width: 640px) {{
+    .header {{ padding: 18px 16px; }}
+    .header h1 {{ font-size: 19px; }}
+    .header .sub {{ font-size: 11px; line-height: 1.6; }}
+    .container {{ padding: 14px 12px; }}
+    .cards {{ grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 18px; }}
+    .card {{ min-width:0; padding: 14px 12px; }}
+    .card .value {{ font-size: 21px; }}
+    .section-title {{ margin: 18px 0 10px; }}
+    .chart-area {{ padding: 14px 12px; margin-top: 18px; }}
+    .chart-controls {{ display:block; }}
+    .chart-controls label {{ display:block; margin-bottom:8px; }}
+    .chart-controls select {{ width:100%; max-width:100%; }}
+    .chart-wrapper {{ height: 300px; }}
+}}
 </style>
 </head>
 <body>
@@ -223,10 +240,12 @@ td {{ padding: 10px 14px; font-size: 13px; border-top: 1px solid #f0f0f0; }}
     </div>
 
     <div class="section-title">&#x1f4cb; 涨跌幅明细</div>
+    <div class="table-wrap">
     <table>
         <thead><tr><th>品种</th><th>最新报价（万元）</th><th>周度涨跌</th><th>月度涨跌</th><th>年度涨跌</th></tr></thead>
         <tbody>{rows_html}</tbody>
     </table>
+    </div>
 
     <div class="chart-area">
         <div class="chart-controls">
