@@ -7,8 +7,9 @@ import math
 from datetime import datetime, timedelta
 from collections import defaultdict
 
-EXCEL = r"D:\矿产行情看板\my_website\矿产行情记录表.xlsx"
-OUTPUT = r"D:\矿产行情看板\my_website\index.html"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+EXCEL = os.path.join(BASE_DIR, "矿产行情记录表.xlsx")
+OUTPUT = os.path.join(BASE_DIR, "index.html")
 
 CATEGORIES = [
     ("稀土行情", ["氧化钕", "氧化镨钕", "氧化铽", "氧化镝", "氧化钇", "独居石"]),
